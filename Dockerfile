@@ -36,7 +36,7 @@ RUN which mcpo
 EXPOSE 8000
 
 # Entrypoint set for easy container invocation
-ENTRYPOINT ["mcpo"]
+# ENTRYPOINT ["mcpo"]  # <-- Remove or comment out
 
-# Default help CMD (can override at runtime)
-CMD ["--help"]
+# Start the FastAPI app with Uvicorn
+CMD ["uvicorn", "mcpo.main:app", "--host", "0.0.0.0", "--port", "8000"]
