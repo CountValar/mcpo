@@ -35,5 +35,5 @@ RUN which mcpo
 # Expose port (optional but common default)
 EXPOSE 8000
 
-# Start mcpo and the MCP time server using the Python module entrypoint
-CMD ["uvx", "mcpo", "--host", "0.0.0.0", "--port", "8000", "--", "python", "-m", "mcp_server_time"]
+# Start mcpo and the MCP time server using the CLI entrypoint
+CMD ["uvx", "mcpo", "--host", "0.0.0.0", "--port", "8000", "--", "mcp-server-time", "--local-timezone=America/New_York"]
