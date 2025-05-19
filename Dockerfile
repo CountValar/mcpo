@@ -26,8 +26,8 @@ ENV VIRTUAL_ENV=/app/.venv
 RUN uv venv "$VIRTUAL_ENV"
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Install mcpo (assuming pyproject.toml is properly configured)
-RUN uv pip install . && rm -rf ~/.cache
+# Install mcpo, uv, and mcp-server-time
+RUN pip install mcpo uv mcp-server-time
 
 # Verify mcpo installed correctly
 RUN which mcpo
@@ -35,8 +35,5 @@ RUN which mcpo
 # Expose port (optional but common default)
 EXPOSE 8000
 
-# Entrypoint set for easy container invocation
-# ENTRYPOINT ["mcpo"]  # <-- Remove or comment out
-
-# Start the FastAPI app with Uvicorn
-CMD ["uvicorn", "mcpo.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start mcpo and the MCP time server using the Python module entrypoint
+CMD ["uvx", "mcpo", "--host", "0.0.0.0", "--port", "8000", "--", "python", "-m", "mcp_server_time"]
